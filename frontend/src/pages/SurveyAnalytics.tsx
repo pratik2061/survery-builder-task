@@ -48,10 +48,10 @@ export default function SurveyAnalytics() {
       <div className="space-y-8">
         {survey.questions.map((question, index) => {
           
-          // --- For Text Questions ---
-          // We just collect all the text answers and show them in a list
+          
+          
           if (question.type === 'text') {
-            // Get all answers for this specific question, and remove any blank ones (using Boolean)
+            
             const answers = responses.map(r => r.answers[question.id]).filter(Boolean);
             
             return (
@@ -73,13 +73,13 @@ export default function SurveyAnalytics() {
             );
           }
           
-          // --- For Rating Questions ---
-          // We calculate the average rating out of 5
+          
+          
           if (question.type === 'rating') {
-            // Extract the numbers, filtering out anything that isn't a valid number
+            
             const answers = responses.map(r => Number(r.answers[question.id])).filter(n => !isNaN(n));
             
-            // Calculate average: sum all ratings and divide by how many there are
+            
             let sum = 0;
             answers.forEach(num => { sum += num; });
             const average = answers.length > 0 ? (sum / answers.length).toFixed(1) : "0.0";
@@ -95,28 +95,28 @@ export default function SurveyAnalytics() {
             );
           }
 
-          // --- For Single and Multiple Choice Questions ---
-          // We count how many times each option was selected
+          
+          
           if (question.type === 'single' || question.type === 'multiple') {
-            // Initialize a tally dictionary with all options set to 0
+            
             const counts: Record<string, number> = {};
             question.options?.forEach(opt => {
               counts[opt] = 0;
             });
             
-            // Go through every user's response
+            
             responses.forEach(r => {
               const answer = r.answers[question.id];
               
               if (Array.isArray(answer)) {
-                // If it's a multiple choice (array), increment tally for each selected option
+                
                 answer.forEach(selection => {
                   if (counts[selection] !== undefined) {
                     counts[selection] += 1;
                   }
                 });
               } else if (answer && counts[answer] !== undefined) {
-                // If it's single choice, increment tally for that one option
+                
                 counts[answer] += 1;
               }
             });
@@ -127,7 +127,7 @@ export default function SurveyAnalytics() {
                 <div className="space-y-3">
                   {question.options?.map(opt => {
                     const count = counts[opt];
-                    // Calculate percentage so we can draw a progress bar
+                    
                     const percent = total > 0 ? (count / total) * 100 : 0;
                     
                     return (

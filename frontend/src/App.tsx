@@ -12,7 +12,7 @@ import SurveyAnalytics from "./pages/SurveyAnalytics";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 
-// Ensure all API calls send the HTTP-only cookie automatically
+
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
@@ -20,7 +20,7 @@ function AdminLayout() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  // Check if user is logged in before rendering admin dashboard
+  
   useEffect(() => {
     axios.get("/api/auth/me")
       .then(() => setIsAuthenticated(true))
@@ -45,7 +45,7 @@ function AdminLayout() {
   }
 
   if (!isAuthenticated) {
-    return null; // Will redirect via useEffect
+    return null; 
   }
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">

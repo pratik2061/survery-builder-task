@@ -14,42 +14,42 @@ export default function SurveyBuilder() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Adds a new question to the end of the survey
+  
   const addQuestion = (type: QuestionType) => {
-    // We create a new question object with default values
+    
     const newQuestion: Question = {
       id: generateId(),
       type: type,
       text: "",
       required: false,
-      // If it's a multiple choice type, give it one empty option to start with
+      
       options: (type === 'single' || type === 'multiple') ? ["Option 1"] : []
     };
     
-    // Add it to our existing list of questions
+    
     setQuestions([...questions, newQuestion]);
   };
 
-  // Updates a specific property (like text or required) for one question
+  
   const updateQuestion = (index: number, updates: Partial<Question>) => {
-    // Create a copy of the array so we don't mutate state directly
+    
     const newQuestions = [...questions];
     
-    // Merge the old question data with the new updates
+    
     newQuestions[index] = { ...newQuestions[index], ...updates };
     
     setQuestions(newQuestions);
   };
 
-  // Removes a question from the list
+  
   const removeQuestion = (index: number) => {
     const newQuestions = [...questions];
     const removedId = newQuestions[index].id;
     
-    // Remove the question at this index
+    
     newQuestions.splice(index, 1);
     
-    // We must also remove any conditional logic that depended on this deleted question
+    
     newQuestions.forEach((question, i) => {
       if (question.conditionalLogic?.dependsOnId === removedId) {
         newQuestions[i].conditionalLogic = undefined;
@@ -59,18 +59,18 @@ export default function SurveyBuilder() {
     setQuestions(newQuestions);
   };
 
-  // Moves a question up or down in the list
+  
   const moveQuestion = (index: number, direction: 'up' | 'down') => {
-    // Prevent moving the first item up, or the last item down
+    
     if (direction === 'up' && index === 0) return;
     if (direction === 'down' && index === questions.length - 1) return;
     
     const newQuestions = [...questions];
     
-    // Calculate the index of the item we are swapping with
+    
     const swapIndex = direction === 'up' ? index - 1 : index + 1;
     
-    // Swap the two items
+    
     const temp = newQuestions[index];
     newQuestions[index] = newQuestions[swapIndex];
     newQuestions[swapIndex] = temp;
@@ -78,9 +78,9 @@ export default function SurveyBuilder() {
     setQuestions(newQuestions);
   };
 
-  // Saves the survey to the backend database
+  
   const handleSave = async () => {
-    // Basic validation before sending to the server
+    
     if (!title.trim()) {
       toast.error("Title is required");
       return;
@@ -90,7 +90,7 @@ export default function SurveyBuilder() {
       return;
     }
     
-    // Make sure no question text is left blank
+    
     const hasEmptyQuestions = questions.some(q => !q.text.trim());
     if (hasEmptyQuestions) {
       toast.error("All questions must have text");
@@ -99,21 +99,21 @@ export default function SurveyBuilder() {
 
     setIsSubmitting(true);
     try {
-      // Send a POST request to our Express backend
+      
       await axios.post("/api/surveys", {
         title: title, 
         description: description, 
         questions: questions
       });
       
-      // If successful, redirect the user back to the admin dashboard
+      
       toast.success("Survey created successfully!");
       navigate(`/admin`);
     } catch (err) {
       console.error(err);
       toast.error("Failed to save survey");
     } finally {
-      setIsSubmitting(false); // Re-enable the save button
+      setIsSubmitting(false); 
     }
   };
 
@@ -208,7 +208,7 @@ export default function SurveyBuilder() {
                 </div>
               )}
 
-              {/* Conditional Logic UI */}
+              {}
               <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-100">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm font-medium text-blue-800">Conditional Logic</span>

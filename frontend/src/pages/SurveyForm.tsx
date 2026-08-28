@@ -20,41 +20,41 @@ export default function SurveyForm() {
       .finally(() => setLoading(false));
   }, [id]);
 
-  // useMemo remembers the result of this calculation until survey or answers change.
-  // This filters out questions that shouldn't be shown based on their conditional logic rules.
+  
+  
   const visibleQuestions = useMemo(() => {
-    // If the survey hasn't loaded yet, show no questions
+    
     if (!survey) {
       return [];
     }
 
-    // Go through each question and decide if it should be kept
+    
     return survey.questions.filter((question) => {
-      // If the question has no conditional logic, always show it
+      
       if (!question.conditionalLogic) {
         return true;
       }
 
-      // Extract the rules for this question
+      
       const dependsOnId = question.conditionalLogic.dependsOnId;
       const equalsValue = question.conditionalLogic.equalsValue;
       
-      // Look up what the user answered for the dependent question
+      
       const dependentAnswer = answers[dependsOnId];
       
-      // If the dependent answer is an array (like from a checkbox), check if it includes the value
+      
       if (Array.isArray(dependentAnswer)) {
         return dependentAnswer.includes(equalsValue);
       }
       
-      // Otherwise, just compare them as strings
+      
       return String(dependentAnswer) === equalsValue;
     });
   }, [survey, answers]);
 
-  // This function runs whenever the user types or clicks an answer
+  
   const handleAnswer = (questionId: string, value: any) => {
-    // Update the answers object with the new value
+    
     setAnswers((previousAnswers) => {
       return { 
         ...previousAnswers, 
@@ -62,7 +62,7 @@ export default function SurveyForm() {
       };
     });
     
-    // If there was an error for this question, clear it because the user is fixing it
+    
     if (errors[questionId]) {
       setErrors((previousErrors) => {
         const newErrors = { ...previousErrors };
@@ -72,7 +72,7 @@ export default function SurveyForm() {
     }
   };
 
-  // Checks if the user filled out all required fields before allowing submission
+  
   const validate = () => {
     const newErrors: Record<string, string> = {};
     let isValid = true;
@@ -81,7 +81,7 @@ export default function SurveyForm() {
       if (question.required) {
         const answer = answers[question.id];
         
-        // Check if the answer is missing, empty, or an empty array
+        
         const isMissing = answer === undefined || answer === "";
         const isEmptyArray = Array.isArray(answer) && answer.length === 0;
         
@@ -96,16 +96,16 @@ export default function SurveyForm() {
     return isValid;
   };
 
-  // Runs when the user clicks the Submit button
+  
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault(); // Prevents the page from refreshing
+    event.preventDefault(); 
     
     if (!validate()) {
-      return; // Stop if there are errors
+      return; 
     }
     
-    // Create a new object that ONLY contains answers for the questions that are visible.
-    // This prevents submitting hidden data if the user changed their mind on a conditional question.
+    
+    
     const finalAnswers: Record<string, any> = {};
     visibleQuestions.forEach((question) => {
       finalAnswers[question.id] = answers[question.id];
