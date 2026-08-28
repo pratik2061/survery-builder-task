@@ -53,7 +53,6 @@ The frontend will be available at `http://localhost:5173`.
    - **Why:** Ensures a clean, modern aesthetic quickly without the overhead of learning or fighting a heavy UI framework.
 
 ## Future Improvements (Given more time)
-- **Authentication:** Add JWT-based auth for the admin panel to prevent unauthorized survey creation.
 - **Advanced Conditional Logic:** Support `NOT_EQUALS`, `GREATER_THAN`, `CONTAINS`, and multi-rule logic (`AND`/`OR`).
 - **Drag & Drop:** Implement a library like `dnd-kit` for smoother question reordering in the builder.
 - **Analytics Charts:** Add Recharts or Chart.js for visual data representation in the dashboard.
