@@ -12,7 +12,7 @@ export default function SurveyAnalytics() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/surveys/${id}/analytics`)
+    axios.get(`/api/surveys/${id}/analytics`)
       .then(res => {
         setSurvey(res.data.survey);
         setResponses(res.data.responses);

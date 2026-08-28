@@ -20,7 +20,7 @@ export default function Login() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:3000/api/auth/login", {
+      await axios.post("/api/auth/login", {
         email,
         password
       });

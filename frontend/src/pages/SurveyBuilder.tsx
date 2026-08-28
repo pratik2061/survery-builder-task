@@ -100,7 +100,7 @@ export default function SurveyBuilder() {
     setIsSubmitting(true);
     try {
       // Send a POST request to our Express backend
-      await axios.post("http://localhost:3000/api/surveys", {
+      await axios.post("/api/surveys", {
         title: title, 
         description: description, 
         questions: questions

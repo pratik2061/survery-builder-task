@@ -14,6 +14,7 @@ import Signup from "./pages/Signup";
 
 // Ensure all API calls send the HTTP-only cookie automatically
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 function AdminLayout() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function AdminLayout() {
 
   // Check if user is logged in before rendering admin dashboard
   useEffect(() => {
-    axios.get("http://localhost:3000/api/auth/me")
+    axios.get("/api/auth/me")
       .then(() => setIsAuthenticated(true))
       .catch(() => {
         setIsAuthenticated(false);
@@ -31,7 +32,7 @@ function AdminLayout() {
 
   const handleLogout = async () => {
     try {
-      await axios.post("http://localhost:3000/api/auth/logout");
+      await axios.post("/api/auth/logout");
       toast.success("Logged out successfully");
       navigate("/login");
     } catch (err) {

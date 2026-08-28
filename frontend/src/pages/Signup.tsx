@@ -25,7 +25,7 @@ export default function Signup() {
 
     setLoading(true);
     try {
-      await axios.post("http://localhost:3000/api/auth/signup", {
+      await axios.post("/api/auth/signup", {
         email,
         password
       });

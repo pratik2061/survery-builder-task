@@ -9,7 +9,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/surveys")
+    axios.get("/api/surveys")
       .then(res => setSurveys(res.data))
       .catch(err => console.error(err))
       .finally(() => setLoading(false));

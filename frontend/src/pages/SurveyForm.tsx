@@ -14,7 +14,7 @@ export default function SurveyForm() {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/surveys/${id}`)
+    axios.get(`/api/surveys/${id}`)
       .then(res => setSurvey(res.data))
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
@@ -112,7 +112,7 @@ export default function SurveyForm() {
     });
 
     try {
-      await axios.post(`http://localhost:3000/api/surveys/${id}/responses`, {
+      await axios.post(`/api/surveys/${id}/responses`, {
         answers: finalAnswers
       });
       toast.success("Response submitted successfully!");
